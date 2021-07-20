@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
+const deps = require("./package.json").dependencies;
 
 
 module.exports = {
@@ -47,7 +48,19 @@ module.exports = {
       exposes: {
           './Transactions': './src/components/Transactions.jsx',
       },
-      shared: ['react','react-dom']
+      shared: {
+        react: {
+          requiredVersion: deps.react,
+          import: "react", // the "react" package will be used a provided and fallback module
+          shareKey: "react", // under this name the shared module will be placed in the share scope
+          shareScope: "default", // share scope with this name will be used
+          singleton: true, // only a single version of the shared module is allowed
+        },
+        "react-dom": {
+          requiredVersion: deps["react-dom"],
+          singleton: true, // only a single version of the shared module is allowed
+        },
+      },
   })
   ]
 }

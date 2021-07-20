@@ -25,16 +25,14 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.jsx?$/,
+        loader: "babel-loader",
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
-        }
+        options: {
+          presets: ["@babel/preset-react"],
+        },
       },
-    ]
+    ],
   },
   plugins:[
     new HtmlWebpackPlugin({
@@ -42,11 +40,17 @@ module.exports = {
     }),
     new ModuleFederationPlugin({
       name: 'Dashboard',
-      remotes: {
-          Payments: 'Payments@http://localhost:9001/remoteEntry.js',
-          Transactions: 'Transactions@http://localhost:9003/remoteEntry.js'
+      shared: {
+        react: {
+          import: "react", // the "react" package will be used a provided and fallback module
+          shareKey: "react", // under this name the shared module will be placed in the share scope
+          shareScope: "default", // share scope with this name will be used
+          singleton: true, // only a single version of the shared module is allowed
+        },
+        "react-dom": {
+          singleton: true, // only a single version of the shared module is allowed
+        },
       },
-      shared: ['react','react-dom']
     })
   ]
 }
