@@ -44,7 +44,14 @@ Go to http://localhost:9002 to see the Dashboard module which includes `Payments
 To see just `Payments` running alone, go to http://localhost:9001
 To see just `Transactions` running alone, go to http://localhost:9003
 
+
+## Dynamic Loading
+
+Check out the `DynamicLoading` branch to see how to load modules dynamically.
+
+
 ## Resources Used
 1. https://www.youtube.com/watch?v=2eGXIbc6lZA
 2. https://scriptedalchemy.medium.com/webpack-5-module-federation-stitching-two-simple-bundles-together-fe4e6a069716
 3. https://webpack.js.org/concepts/module-federation/
+4. https://github.com/module-federation/module-federation-examples
